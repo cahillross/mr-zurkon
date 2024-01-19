@@ -1,0 +1,33 @@
+name: Validate and Test
+
+on: push
+jobs:
+  validate-test:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        python-version: [3.9]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Set up poetry
+        run: |
+          pip install poetry
+          poetry install
+      - name: Validate PEP8 with flake8
+        run: |
+          poetry run flake8 src/ --config .flake8
+      - name: Validate types with mypy
+        run: |
+          poetry run mypy src/ --config mypy.ini --check-untyped-defs
+      - name: Validate security with bandit
+        run: |
+          poetry run bandit src/
+      - name: Test endpointsw ith pytest
+        run: |
+          poetry run pytest tests/
+        env:
+          PYTHONPATH: /home/runner/work/mr-zurkon/mr-zurkon/src

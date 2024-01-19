@@ -1,0 +1,83 @@
+default_stages: [commit]
+repos:
+  - repo: local
+    hooks:
+      - id: flake8
+        name: flake8
+        entry: poetry run flake8 src/ --config .flake8
+        language: system
+        pass_filenames: false
+        always_run: true
+  - repo: local
+    hooks:
+      - id: black
+        name: black
+        entry: poetry run black src/
+        language: system
+        pass_filenames: false
+        always_run: true
+  - repo: local
+    hooks:
+      - id: isort
+        name: isort
+        entry: poetry run isort src/ --profile black --filter-files
+        language: system
+        pass_filenames: false
+        always_run: true
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        entry: poetry run mypy src/ --config mypy.ini --check-untyped-defs
+        language: system
+        pass_filenames: false
+        always_run: true
+  - repo: local
+    hooks:
+      - id: pytest
+        name: pytest
+        entry: poetry run pytest tests/
+        language: system
+        pass_filenames: false
+        always_run: true
+        verbose: true
+  - repo: local
+    hooks:
+      - id: bandit
+        name: bandit
+        entry: poetry run bandit -r src/
+        language: system
+        pass_filenames: false
+        always_run: true
+  - repo: local
+    hooks:
+      - id: poetry check
+        name: poetry check
+        entry: poetry check
+        language: system
+        pass_filenames: false
+        always_run: true
+  - repo: local
+    hooks:
+      - id: poetry lock
+        name: poetry lock
+        entry: poetry lock
+        language: system
+        pass_filenames: false
+        always_run: true
+  - repo: local
+    hooks:
+      - id: export requirements
+        name: export requirements
+        entry: bash -c 'poetry export -o "src/requirements.txt" --without-hashes; git add "src/requirements.txt";'
+        language: system
+        pass_filenames: false
+        always_run: true
+  - repo: local
+    hooks:
+      - id: export requirements dev
+        name: export requirements dev
+        entry: bash -c 'poetry export -o "requirements-dev.txt" --without-hashes --only=dev; git add "requirements-dev.txt"'
+        language: system
+        pass_filenames: false
+        always_run: true
