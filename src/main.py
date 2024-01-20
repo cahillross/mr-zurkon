@@ -10,7 +10,7 @@ intents = Intents.default()
 intents.message_content = True
 
 bot = Bot(
-    command_prefix=when_mentioned_or("!"),
+    command_prefix=when_mentioned_or("/"),
     description="Relatively simple music bot example",
     intents=intents,
 )
