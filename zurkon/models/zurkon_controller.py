@@ -11,9 +11,7 @@ class ZurkonController(Cog):
         """Streams from a url (same as yt, but doesn't predownload)"""
         try:
             async with ctx.typing():
-                print("foo")
                 player = await YouTubeDLHelper.from_url(url, loop=self.bot.loop)
-                print(player)
                 ctx.voice_client.play(
                     player, after=lambda e: print(f"Player error: {e}") if e else None
                 )
