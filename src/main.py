@@ -4,7 +4,7 @@ from os import getenv
 from discord import ClientUser, Intents
 from discord.ext.commands import Bot, when_mentioned_or
 
-from models.youtubedl_helper import YouTubeDLHelper
+from zurkon.models.zurkon_controller import ZurkonController
 
 intents = Intents.default()
 intents.message_content = True
@@ -18,6 +18,7 @@ bot = Bot(
 
 @bot.event
 async def on_ready():
+    """Event handler for when the bot has established a connection to Discord."""
     user: ClientUser = bot.user  # type: ignore
     print(f"Logged in as {user} (ID: {user.id})")
     print("------")
@@ -25,7 +26,7 @@ async def on_ready():
 
 async def main():
     async with bot:
-        await bot.add_cog(YouTubeDLHelper(bot))
+        await bot.add_cog(ZurkonController(bot))
         await bot.start(getenv("API_TOKEN", ""))
 
 
