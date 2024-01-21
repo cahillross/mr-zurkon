@@ -30,4 +30,4 @@ jobs:
         run: |
           poetry run pytest tests/
         env:
-          PYTHONPATH: /home/runner/work/mr-zurkon/mr-zurkon/src
+          PYTHONPATH: /home/runner/work/zurkon/zurkon/src
