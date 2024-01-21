@@ -61,7 +61,7 @@ repos:
     hooks:
       - id: poetry lock
         name: poetry lock
-        entry: poetry lock
+        entry: poetry lock --no-cache
         language: system
         pass_filenames: false
         always_run: true
